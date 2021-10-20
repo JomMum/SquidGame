@@ -734,4 +734,4 @@ MonoBehaviour:
   needleMark: {fileID: 1120924566261504124, guid: c792d657f66d93c439254e5d8c1231bb,
     type: 3}
   needleMarks: {fileID: 1578394261}
-  moveSpd: 3
+  moveSpd: 1
