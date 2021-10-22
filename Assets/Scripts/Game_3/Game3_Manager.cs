@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Game3_Manager : MonoBehaviour
 {
+    public GameManager gameManager;
+
     int tugOfWarPoint = 5; //줄다리기 포인트
     public int limitTime; //제한시간
     public int maxLimitTime = 50; //최대 제한시간
@@ -14,46 +17,52 @@ public class Game3_Manager : MonoBehaviour
     public bool canTouch; //터치 가능한 상태인가
     public bool isClear; //해당 패턴을 클리어했는가
 
-    void Start()
-    {
-        tugOfWarPoint = 5;
-        WaveSetting();
-    }
+    bool isOnce;
 
     void Update()
     {
-        //게임 승패 판정
-        if (tugOfWarPoint >= 10)
-            Debug.Log("성공");
-        else if (tugOfWarPoint <= 0)
-            Debug.Log("실패");
-
-        if(canTouch)
+        if(gameManager.isGameStart)
         {
-            //실패/통과 유무 판정
-            if (pattern[curPattern] == 0)
+            if(!isOnce)
             {
-                canTouch = false;
-                isClear = true;
-            }
-            else if ((Input.GetKeyUp(KeyCode.LeftArrow) && pattern[curPattern] != 1)
-                     || (Input.GetKeyUp(KeyCode.RightArrow) && pattern[curPattern] != 2)
-                     || (Input.GetKeyUp(KeyCode.UpArrow) && pattern[curPattern] != 3)
-                     || (Input.GetKeyUp(KeyCode.DownArrow) && pattern[curPattern] != 4))
-            {
-                canTouch = false;
-                isClear = false;
+                WaveSetting();
+                isOnce = true;
             }
 
-            //올바르게 키를 눌렀을 시
-            if ((Input.GetKeyUp(KeyCode.LeftArrow) && pattern[curPattern] == 1)
-                || (Input.GetKeyUp(KeyCode.RightArrow) && pattern[curPattern] == 2)
-                || (Input.GetKeyUp(KeyCode.UpArrow) && pattern[curPattern] == 3)
-                || (Input.GetKeyUp(KeyCode.DownArrow) && pattern[curPattern] == 4))
+            //게임 승패 판정
+            if (tugOfWarPoint >= 10) //성공
+                SceneManager.LoadScene("Game_4");
+            else if (tugOfWarPoint <= 0) //실패
+                SceneManager.LoadScene("MainMenu");
+
+            if (canTouch)
             {
-                curPattern++;
+                //실패/통과 유무 판정
+                if (pattern[curPattern] == 0)
+                {
+                    canTouch = false;
+                    isClear = true;
+                }
+                else if ((Input.GetKeyUp(KeyCode.LeftArrow) && pattern[curPattern] != 1)
+                         || (Input.GetKeyUp(KeyCode.RightArrow) && pattern[curPattern] != 2)
+                         || (Input.GetKeyUp(KeyCode.UpArrow) && pattern[curPattern] != 3)
+                         || (Input.GetKeyUp(KeyCode.DownArrow) && pattern[curPattern] != 4))
+                {
+                    canTouch = false;
+                    isClear = false;
+                }
+
+                //올바르게 키를 눌렀을 시
+                if ((Input.GetKeyUp(KeyCode.LeftArrow) && pattern[curPattern] == 1)
+                    || (Input.GetKeyUp(KeyCode.RightArrow) && pattern[curPattern] == 2)
+                    || (Input.GetKeyUp(KeyCode.UpArrow) && pattern[curPattern] == 3)
+                    || (Input.GetKeyUp(KeyCode.DownArrow) && pattern[curPattern] == 4))
+                {
+                    curPattern++;
+                }
             }
         }
+
     }
 
     void WaveSetting()

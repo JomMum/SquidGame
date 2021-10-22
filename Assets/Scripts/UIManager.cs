@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class Game3_UIManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
     public Game3_Manager gameManager;
     public Text patternText;
@@ -14,15 +15,18 @@ public class Game3_UIManager : MonoBehaviour
 
     void Update()
     {
-        //패턴 UI
-        if (gameManager.canTouch)
-            ShowPatternUI();
+        if(SceneManager.GetActiveScene().name == "Game_3")
+        {
+            //패턴 UI
+            if (gameManager.canTouch)
+                ShowPatternUI();
 
-        //결과창 UI
-        ShowResultUI();
+            //결과창 UI
+            ShowResultUI();
 
-        //제한시간 UI
-        ShowLimitTimeUI();
+            //제한시간 UI
+            ShowLimitTimeUI();
+        }
     }
 
     void ShowPatternUI()

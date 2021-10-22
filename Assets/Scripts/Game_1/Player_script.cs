@@ -1,36 +1,54 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player_script : MonoBehaviour
 {
+    Animator anim;
+    public GameManager gameManager;
     public Bot_Script Bot_Script;
     public float movespeed;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        anim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.anyKey)
+        if(gameManager.isGameStart)
         {
-            if (Bot_Script.isback)
-                transform.Translate(new Vector2(0, movespeed));
+            if (Input.anyKey)
+            {
+                if (Bot_Script.isback)
+                {
+                    anim.SetBool("isWalk", true);
+                    transform.Translate(new Vector2(0, movespeed));
+                }
+                else
+                {
+                    //게임오버
+                    SceneManager.LoadScene("MainMenu");
+                }
+            }
             else
-                Debug.Log("탈락");
+            {
+                anim.SetBool("isWalk", false);
+            }
         }
     }
 
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("FinalLine"))
+        if (gameManager.isGameStart)
         {
-            Debug.Log("성공");
+            if (collision.gameObject.CompareTag("FinalLine"))
+            {
+                //성공
+                SceneManager.LoadScene("Game_2");
+            }
         }
     }
 }

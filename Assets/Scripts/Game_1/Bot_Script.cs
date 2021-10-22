@@ -4,29 +4,45 @@ using UnityEngine;
 
 public class Bot_Script : MonoBehaviour
 {
+    Animator anim;
+    public GameManager gameManager;
     public bool isback=true;
-    // Start is called before the first frame update
-    void Start()
+    bool isTurn;
+    bool isOnce;
+
+    void Awake()
     {
-        StartCoroutine(turn());
+        anim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if(gameManager.isGameStart && !isOnce)
+        {
+            StartCoroutine(turn());
+            isOnce = true;
+        }
     }
 
     IEnumerator turn()
     {
+        //뒤 보는 중
+        isTurn = true;
+        isback = true;
         yield return new WaitForSeconds(1.5f);
 
-        Debug.Log("돌았다");
-        isback = true;
+        //돌아봄
+        if (isTurn)
+        {
+            isTurn = false;
+            anim.SetTrigger("doTurn");
+        }
+        yield return new WaitForSeconds(1);
 
-        yield return new WaitForSeconds(2);
-        Debug.Log("뒤돌아봄");
-       isback = false;
+        //바라보는 중
+        isback = false;
+        yield return new WaitForSeconds(1);
+        anim.SetTrigger("doReturn");
 
         StartCoroutine(turn());
     }
