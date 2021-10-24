@@ -10,6 +10,12 @@ public class Player_script : MonoBehaviour
     public Bot_Script Bot_Script;
     public float movespeed;
 
+    bool isGameOver;
+    bool isGameClear;
+
+    bool isWalk;
+    bool isOnce;
+
     void Awake()
     {
         anim = GetComponent<Animator>();
@@ -19,17 +25,48 @@ public class Player_script : MonoBehaviour
     {
         if(gameManager.isGameStart)
         {
+            if (isGameClear)
+            {
+                //성공
+                SceneManager.LoadScene("Game_2");
+                isGameClear = false;
+            }
+            else if (isGameOver)
+            {
+                //게임오버
+                isWalk = false;
+                anim.SetTrigger("doDie");
+                isGameOver = false;
+            }
+
+            if (!isOnce)
+            {
+                isWalk = true;
+                isOnce = true;
+            }
+
+            if(gameManager.limitTime <= 0)
+            {
+                if(gameManager.timeOver)
+                {
+                    isGameOver = true;
+                    gameManager.timeOver = false;
+                }
+            }
+
             if (Input.anyKey)
             {
-                if (Bot_Script.isback)
+                if(isWalk)
                 {
-                    anim.SetBool("isWalk", true);
-                    transform.Translate(new Vector2(0, movespeed));
-                }
-                else
-                {
-                    //게임오버
-                    SceneManager.LoadScene("MainMenu");
+                    if (Bot_Script.isback)
+                    {
+                        anim.SetBool("isWalk", true);
+                        transform.Translate(new Vector2(0, movespeed));
+                    }
+                    else
+                    {
+                        isGameOver = true;
+                    }
                 }
             }
             else
@@ -46,8 +83,7 @@ public class Player_script : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("FinalLine"))
             {
-                //성공
-                SceneManager.LoadScene("Game_2");
+                isGameClear = true;
             }
         }
     }

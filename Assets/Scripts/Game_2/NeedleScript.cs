@@ -10,12 +10,14 @@ public class NeedleScript : MonoBehaviour
     public GameObject needleMarks;
 
     public int moveSpd;
-
     public int dalgonaPoint = 0;
+    public int targetPoint;
+
+    bool isGameOver;
+    bool isGameClear;
 
     int randomX;
     int randomY;
-
     bool isCorrectTouch; //올바른 선에 클릭했는가
     bool isOnce;
 
@@ -23,8 +25,22 @@ public class NeedleScript : MonoBehaviour
     {
         if (gameManager.isGameStart)
         {
-            if(!isOnce)
+            if (isGameClear)
             {
+                //성공
+                SceneManager.LoadScene("Game_3");
+                isGameClear = false;
+            }
+            else if (isGameOver)
+            {
+                //게임오버
+                SceneManager.LoadScene("MainMenu");
+                isGameOver = false;
+            }
+
+            if (!isOnce)
+            {
+                targetPoint = 10;
                 StartCoroutine(RandomMove());
                 isOnce = true;
             }
@@ -33,17 +49,19 @@ public class NeedleScript : MonoBehaviour
             transform.localPosition = Vector2.MoveTowards(transform.localPosition, new Vector2(randomX, randomY), moveSpd);
 
             //일정 점수 도달 시 성공
-            if (dalgonaPoint >= 30)
+            if (dalgonaPoint >= targetPoint)
             {
-                //성공
-                SceneManager.LoadScene("Game_3");
+                isGameClear = true;
             }
 
             //올바른 선에 맞춰 클릭하지 않았을 시 게임 오버
-            if (Input.GetMouseButtonDown(0) && !isCorrectTouch)
+            if (Input.GetMouseButtonDown(0))
             {
-                //게임오버
-                SceneManager.LoadScene("MainMenu");
+                if (!isCorrectTouch)
+                    Debug.Log("땡");
+                //isGameOver = true;
+                else
+                    dalgonaPoint++;
             }
             //클릭 뗐을 시 변수 false
             else if (Input.GetMouseButtonUp(0))
@@ -79,8 +97,6 @@ public class NeedleScript : MonoBehaviour
                 if (collision.gameObject.CompareTag("DalgonaLine"))
                 {
                     isCorrectTouch = true;
-
-                    dalgonaPoint++;
                 }
             }
         }

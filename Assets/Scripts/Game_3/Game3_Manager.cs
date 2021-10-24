@@ -7,7 +7,7 @@ public class Game3_Manager : MonoBehaviour
 {
     public GameManager gameManager;
 
-    int tugOfWarPoint = 5; //줄다리기 포인트
+    public int tugOfWarPoint = 5; //줄다리기 포인트
     public int limitTime; //제한시간
     public int maxLimitTime = 50; //최대 제한시간
 
@@ -31,7 +31,7 @@ public class Game3_Manager : MonoBehaviour
 
             //게임 승패 판정
             if (tugOfWarPoint >= 10) //성공
-                SceneManager.LoadScene("Game_4");
+                SceneManager.LoadScene("Game_5");
             else if (tugOfWarPoint <= 0) //실패
                 SceneManager.LoadScene("MainMenu");
 
