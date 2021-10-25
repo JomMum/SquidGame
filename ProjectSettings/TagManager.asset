@@ -7,6 +7,7 @@ TagManager:
   - FinalLine
   - NeedleMark
   - Glass
+  - EndFloor
   layers:
   - Default
   - TransparentFX

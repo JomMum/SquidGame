@@ -483,6 +483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a11b7070f2b8e9a4a8968ef9e5fc86a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curSceneNum: 1
   nextSceneNum: 2
   isGameClear: 0
 --- !u!1 &210501594
@@ -1624,6 +1625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a11b7070f2b8e9a4a8968ef9e5fc86a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curSceneNum: 0
   nextSceneNum: 0
   isGameClear: 0
 --- !u!1 &645560094
@@ -2480,7 +2482,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_TargetDisplay: 0
 --- !u!224 &1133724400
 RectTransform:
@@ -2680,11 +2682,15 @@ MonoBehaviour:
   TargetPointUI_2: {fileID: 0}
   game3_Manager: {fileID: 0}
   pointUI: {fileID: 0}
-  patternText: {fileID: 0}
   resultUI: {fileID: 0}
   LimitTimeUI_3: {fileID: 0}
+  patternUI: {fileID: 0}
+  patterns: {fileID: 0}
+  keyImg: []
   resultImg: []
   LimitTimeUI_5: {fileID: 0}
+  ChallengeText: {fileID: 0}
+  PrizeText: {fileID: 0}
 --- !u!4 &1607633252
 Transform:
   m_ObjectHideFlags: 0

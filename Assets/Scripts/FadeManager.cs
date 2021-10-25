@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class FadeManager : MonoBehaviour
 {
+    public int curSceneNum;
     public int nextSceneNum;
 
     public bool isGameClear;
@@ -13,10 +14,13 @@ public class FadeManager : MonoBehaviour
     {
         if (isGameClear)
         {
-            SceneManager.LoadScene("Game_" + nextSceneNum);
+            if (nextSceneNum == 6)
+                SceneManager.LoadScene("ResultScene");
+            else
+                SceneManager.LoadScene("Game_" + nextSceneNum);
         }
         else
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("Game_" + curSceneNum);
     }
 
     void ActiveFalseWindow()

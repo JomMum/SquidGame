@@ -255,6 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a11b7070f2b8e9a4a8968ef9e5fc86a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curSceneNum: 2
   nextSceneNum: 3
   isGameClear: 0
 --- !u!111 &52524665
@@ -785,7 +786,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -30, y: -20}
-  m_SizeDelta: {x: 280, y: 80}
+  m_SizeDelta: {x: 320, y: 80}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &411479490
 MonoBehaviour:
@@ -911,6 +912,7 @@ GameObject:
   - component: {fileID: 473414769}
   - component: {fileID: 473414768}
   - component: {fileID: 473414767}
+  - component: {fileID: 473414770}
   m_Layer: 5
   m_Name: Dalgona_3
   m_TagString: Untagged
@@ -995,6 +997,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 473414765}
   m_CullTransparentMesh: 0
+--- !u!68 &473414770
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473414765}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 8
+  m_Points:
+  - {x: 0.051971436, y: 133.05685}
+  - {x: 124.92212, y: -77.424286}
+  - {x: -124.866, y: -76.14743}
+  - {x: -0.0519104, y: 133.60898}
 --- !u!1 &528134928
 GameObject:
   m_ObjectHideFlags: 0
@@ -1064,8 +1086,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "1\uBD84 \uC548\uC5D0 \uB2EC\uACE0\uB098\uC758 \uADF8\uB9BC\uC744\r \uAE68\uB057\uD558\uAC8C
-    \uC798\uB77C\uB0B8 \uD50C\uB808\uC774\uC5B4\uB294 \uBAA8\uB450 \uD1B5\uACFC\uB41C\uB2E4."
+  m_Text: "30\uCD08 \uB0B4\uC5D0 \uBC29\uD5A5\uD0A4\uB97C \uD1B5\uD574 \uBC14\uB298\uC744
+    \uC774\uB3D9\uC2DC\uCF1C,\n\uB2EC\uACE0\uB098\uC5D0 \uADF8\uB824\uC9C4 \uC120\uC744\r
+    \uB530\uB77C \uC2A4\uD398\uC774\uC2A4 \uBC14\uB97C \uB20C\uB7EC\n30\uC810\uC5D0
+    \uB3C4\uB2EC\uD558\uB294 \uD50C\uB808\uC774\uC5B4\uB294 \uBAA8\uB450 \uD1B5\uACFC\uB41C\uB2E4."
 --- !u!222 &528134931
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1248,7 +1272,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &926010597
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1551,7 +1575,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: SCORE 10 / 10
+  m_Text: SCORE 30 / 30
 --- !u!222 &1150699043
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1577,7 +1601,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 250, y: 45}
+  m_SizeDelta: {x: 265, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1266717665
 GameObject:
@@ -1936,11 +1960,15 @@ MonoBehaviour:
   TargetPointUI_2: {fileID: 1150699042}
   game3_Manager: {fileID: 0}
   pointUI: {fileID: 0}
-  patternText: {fileID: 0}
   resultUI: {fileID: 0}
   LimitTimeUI_3: {fileID: 0}
+  patternUI: {fileID: 0}
+  patterns: {fileID: 0}
+  keyImg: []
   resultImg: []
   LimitTimeUI_5: {fileID: 0}
+  ChallengeText: {fileID: 0}
+  PrizeText: {fileID: 0}
 --- !u!4 &1439776655
 Transform:
   m_ObjectHideFlags: 0
@@ -2199,6 +2227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a11b7070f2b8e9a4a8968ef9e5fc86a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curSceneNum: 0
   nextSceneNum: 0
   isGameClear: 0
 --- !u!111 &1671186031
@@ -2538,9 +2567,13 @@ MonoBehaviour:
     type: 3}
   needleMarks: {fileID: 1578394261}
   fadeout: {fileID: 52524662}
+  dalgona:
+  - {fileID: 926010596}
+  - {fileID: 1890154680}
+  - {fileID: 473414765}
   moveSpd: 100
   dalgonaPoint: 0
-  targetPoint: 10
+  targetPoint: 30
 --- !u!1 &1890154680
 GameObject:
   m_ObjectHideFlags: 0
@@ -2553,6 +2586,7 @@ GameObject:
   - component: {fileID: 1890154684}
   - component: {fileID: 1890154683}
   - component: {fileID: 1890154682}
+  - component: {fileID: 1890154685}
   m_Layer: 5
   m_Name: Dalgona_2
   m_TagString: Untagged
@@ -2637,3 +2671,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1890154680}
   m_CullTransparentMesh: 0
+--- !u!68 &1890154685
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1890154680}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 8
+  m_Points:
+  - {x: 132.15057, y: -0.6199646}
+  - {x: 124.99194, y: 49.15146}
+  - {x: 96.523254, y: 99.30261}
+  - {x: 53.237732, y: 123.2655}
+  - {x: -0.8770447, y: 135.46844}
+  - {x: -60.84494, y: 119.964966}
+  - {x: -97.01184, y: 92.4863}
+  - {x: -126.27551, y: 44.49533}
+  - {x: -136.14761, y: -1.3223267}
+  - {x: -122.18851, y: -54.39157}
+  - {x: -96.281525, y: -95.83096}
+  - {x: -52.1575, y: -123.03818}
+  - {x: -0.6081543, y: -133.41211}
+  - {x: 68.70764, y: -115.864075}
+  - {x: 114.504944, y: -71.28}
+  - {x: 125.29675, y: -43.67276}
+  - {x: 133.15054, y: -2.4800415}

@@ -21,12 +21,20 @@ public class UIManager : MonoBehaviour
     public Text pointUI;
     public Image resultUI;
     public Image LimitTimeUI_3;
+    public GameObject patternUI;
+    public GameObject patterns;
 
     public Sprite[] keyImg;
     public Sprite[] resultImg;
 
+    bool isShow;
+
     [Header("Game_5")]
     public Text LimitTimeUI_5;
+
+    [Header("ResultScene")]
+    public Text ChallengeText;
+    public Text PrizeText;
 
     void Update()
     {
@@ -45,10 +53,22 @@ public class UIManager : MonoBehaviour
         }
         else if(SceneManager.GetActiveScene().name == "Game_3")
         {
+            if (game3_Manager.curPattern == 0)
+                isShow = false;
+
+            if(isShow)
+            {
+                if(game3_Manager.curPattern != 0)
+                {
+                    Image curPattern = patterns.transform.GetChild(game3_Manager.curPattern - 1).gameObject.GetComponent<Image>();
+                    curPattern.color = new Color(255 / 255f, 139 / 255f, 139 / 255f);
+                }
+            }
+
             pointUI.text = "SCORE " + game3_Manager.tugOfWarPoint + " / " + "10";
 
             //패턴 UI
-            if (game3_Manager.canTouch)
+            if (game3_Manager.canTouch && !isShow)
                 ShowPatternUI();
 
             //결과창 UI
@@ -64,16 +84,38 @@ public class UIManager : MonoBehaviour
 
             LimitTimeUI_5.text = min + " : " + sec;
         }
+        else if(SceneManager.GetActiveScene().name == "ResultScene")
+        {
+            ChallengeText.text = PointManager.Instance.challengeNum.ToString();
+
+            int num1 = PointManager.Instance.cashPrize / 10;
+            int num2 = PointManager.Instance.cashPrize % 10;
+            PrizeText.text = num1 + "," + num2 + "00,000,000";
+        }
     }
 
     void ShowPatternUI()
     {
+        for (int i = 0; i < patterns.transform.childCount; i++)
+        {
+            Destroy(patterns.transform.GetChild(i).gameObject);
+        }
+
+        isShow = true;
+
         for (int i = 0; i < game3_Manager.pattern.Length; i++)
         {
-            //패턴 UI 표시
-            Instantiate(keyImg[game3_Manager.pattern[i] - 1]);
+            if (game3_Manager.pattern[i] != 0)
+            {
+                //패턴 UI 표시
+                GameObject pattern = Instantiate(patternUI);
+                pattern.transform.parent = patterns.transform;
 
-            //pattern.transform.localPosition =
+                Image patternSpr = pattern.gameObject.GetComponent<Image>();
+                patternSpr.sprite = keyImg[game3_Manager.pattern[i] - 1];
+            }
+            else
+                return;
         }
     }
 

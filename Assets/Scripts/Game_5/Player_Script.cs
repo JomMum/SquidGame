@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Player_Script : MonoBehaviour
 {
-    public GameManager gameManager;
-    public GameObject fadeout;
+    GameManager gameManager;
+    GameObject fadeout;
+    public GameObject player;
 
     Animator anim;
 
@@ -16,7 +17,6 @@ public class Player_Script : MonoBehaviour
     bool isright;
     float curY;
 
-    bool isGameOver;
     bool isGameClear;
 
     bool isOnce;
@@ -24,6 +24,8 @@ public class Player_Script : MonoBehaviour
 
     void Awake()
     {
+        gameManager = GameObject.Find("GameManager").gameObject.GetComponent<GameManager>();
+        fadeout = GameObject.Find("FadeWindow").transform.Find("Fadeout").gameObject;
         anim = GetComponent<Animator>();
     }
 
@@ -34,13 +36,12 @@ public class Player_Script : MonoBehaviour
             if (isGameClear)
             {
                 //성공
-                isGameClear = false;
-            }
-            else if (isGameOver)
-            {
-                //게임오버
+                FadeManager fadeMgr = fadeout.GetComponent<FadeManager>();
+                fadeMgr.isGameClear = true;
+
                 Invoke("FadeOut", 1.5f);
-                isGameOver = false;
+
+                isGameClear = false;
             }
 
             if (!isOnce)
@@ -96,7 +97,7 @@ public class Player_Script : MonoBehaviour
             {
                 anim.SetBool("isJump", false);
 
-                if (collision.gameObject.CompareTag("FinalLine"))
+                if (collision.gameObject.CompareTag("EndFloor"))
                 {
                     isGameClear = true;
                 }
@@ -114,19 +115,37 @@ public class Player_Script : MonoBehaviour
 
                         if(!isOnceAnim)
                         {
-                            Animator glassAnim = collision.gameObject.GetComponent<Animator>();
-                            glassAnim.SetTrigger("doBroken");
+                            //애니메이션 실행
+                            if (!glassScript.isBroken)
+                            {
+                                Animator glassAnim = collision.gameObject.GetComponent<Animator>();
+                                glassAnim.SetTrigger("doBroken");
+                                glassScript.isBroken = true;
 
-                            anim.SetTrigger("doFall");
+                                Invoke("DelayFall", 0.8f);
+                            }
+                            else
+                                anim.SetTrigger("doFall");
+
+                            //점수 감소
+                            PointManager.Instance.challengeNum++;
+                            PointManager.Instance.cashPrize--;
+
+                            //플레이어 스폰
+                            GameObject newPlayer = Instantiate(player);
+                            newPlayer.transform.position = new Vector2(0, -10.5f);
 
                             isOnceAnim = true;
                         }
-
-                        isGameOver = true;
                     }
                 }
             }
         }
+    }
+
+    void DelayFall()
+    {
+        anim.SetTrigger("doFall");
     }
 
     void FadeOut()

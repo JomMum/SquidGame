@@ -10,6 +10,9 @@ public class Bot_Script : MonoBehaviour
     bool isTurn;
     bool isOnce;
 
+    float RandomTime_1;
+    float RandomTime_2;
+
     void Awake()
     {
         anim = GetComponent<Animator>();
@@ -26,10 +29,13 @@ public class Bot_Script : MonoBehaviour
 
     IEnumerator turn()
     {
+        RandomTime_1 = Random.Range(0.5f, 2);
+        RandomTime_2 = Random.Range(0.5f, 1.5f);
+
         //뒤 보는 중
         isTurn = true;
         isback = true;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(RandomTime_1);
 
         //돌아봄
         if (isTurn)
@@ -41,7 +47,7 @@ public class Bot_Script : MonoBehaviour
 
         //바라보는 중
         isback = false;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(RandomTime_2);
         anim.SetTrigger("doReturn");
 
         StartCoroutine(turn());

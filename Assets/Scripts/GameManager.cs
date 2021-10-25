@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
         {
             if (isGameStart && !isOnce)
             {
-                limitTime = 60; //제한시간 1분
+                limitTime = 30; //제한시간 30초
                 StartCoroutine("StartTimer");
                 isOnce = true;
             }

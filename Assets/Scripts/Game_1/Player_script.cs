@@ -41,6 +41,9 @@ public class Player_script : MonoBehaviour
             else if (isGameOver)
             {
                 //게임오버
+                PointManager.Instance.challengeNum++;
+                PointManager.Instance.cashPrize--;
+
                 isWalk = false;
                 anim.SetTrigger("doDie");
 
