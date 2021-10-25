@@ -6,8 +6,10 @@ using UnityEngine.SceneManagement;
 public class Player_script : MonoBehaviour
 {
     Animator anim;
+
     public GameManager gameManager;
     public Bot_Script Bot_Script;
+    public GameObject fadeout;
     public float movespeed;
 
     bool isGameOver;
@@ -28,7 +30,12 @@ public class Player_script : MonoBehaviour
             if (isGameClear)
             {
                 //성공
-                SceneManager.LoadScene("Game_2");
+                isWalk = false;
+
+                FadeManager fadeMgr = fadeout.GetComponent<FadeManager>();
+                fadeMgr.isGameClear = true;
+
+                Invoke("FadeOut", 1.5f);
                 isGameClear = false;
             }
             else if (isGameOver)
@@ -36,6 +43,8 @@ public class Player_script : MonoBehaviour
                 //게임오버
                 isWalk = false;
                 anim.SetTrigger("doDie");
+
+                Invoke("FadeOut", 1.5f);
                 isGameOver = false;
             }
 
@@ -61,7 +70,7 @@ public class Player_script : MonoBehaviour
                     if (Bot_Script.isback)
                     {
                         anim.SetBool("isWalk", true);
-                        transform.Translate(new Vector2(0, movespeed));
+                        transform.Translate(new Vector2(0, movespeed * Time.deltaTime));
                     }
                     else
                     {
@@ -86,5 +95,10 @@ public class Player_script : MonoBehaviour
                 isGameClear = true;
             }
         }
+    }
+
+    void FadeOut()
+    {
+        fadeout.SetActive(true);
     }
 }

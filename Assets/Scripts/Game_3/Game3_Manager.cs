@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Game3_Manager : MonoBehaviour
 {
     public GameManager gameManager;
+    public GameObject fadeout;
 
     public int tugOfWarPoint = 5; //줄다리기 포인트
     public int limitTime; //제한시간
@@ -31,9 +32,16 @@ public class Game3_Manager : MonoBehaviour
 
             //게임 승패 판정
             if (tugOfWarPoint >= 10) //성공
-                SceneManager.LoadScene("Game_5");
+            {
+                FadeManager fadeMgr = fadeout.GetComponent<FadeManager>();
+                fadeMgr.isGameClear = true;
+
+                Invoke("FadeOut", 1.5f);
+            }
             else if (tugOfWarPoint <= 0) //실패
-                SceneManager.LoadScene("MainMenu");
+            {
+                Invoke("FadeOut", 1.5f);
+            }
 
             if (canTouch)
             {
@@ -110,5 +118,10 @@ public class Game3_Manager : MonoBehaviour
 
         isClear = false;
         WaveSetting();
+    }
+
+    void FadeOut()
+    {
+        fadeout.SetActive(true);
     }
 }

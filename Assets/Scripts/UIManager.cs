@@ -19,16 +19,14 @@ public class UIManager : MonoBehaviour
     [Header("Game_3")]
     public Game3_Manager game3_Manager;
     public Text pointUI;
-    public Text patternText;
     public Image resultUI;
     public Image LimitTimeUI_3;
 
+    public Sprite[] keyImg;
     public Sprite[] resultImg;
 
     [Header("Game_5")]
     public Text LimitTimeUI_5;
-
-    string patternName;
 
     void Update()
     {
@@ -43,11 +41,11 @@ public class UIManager : MonoBehaviour
             LimitTimeUI_2.text = "00 : " + gameManager.limitTime;
 
             //달고나 포인트
-            TargetPointUI_2.text = "점수: " + needleScipt.dalgonaPoint + " / " + needleScipt.targetPoint;
+            TargetPointUI_2.text = "SCORE " + needleScipt.dalgonaPoint + " / " + needleScipt.targetPoint;
         }
         else if(SceneManager.GetActiveScene().name == "Game_3")
         {
-            pointUI.text = "점수: " + game3_Manager.tugOfWarPoint + " / " + "10";
+            pointUI.text = "SCORE " + game3_Manager.tugOfWarPoint + " / " + "10";
 
             //패턴 UI
             if (game3_Manager.canTouch)
@@ -70,31 +68,12 @@ public class UIManager : MonoBehaviour
 
     void ShowPatternUI()
     {
-        patternText.text = "";
-
         for (int i = 0; i < game3_Manager.pattern.Length; i++)
         {
             //패턴 UI 표시
-            switch (game3_Manager.pattern[i])
-            {
-                case 1:
-                    patternName = "좌";
-                    break;
-                case 2:
-                    patternName = "우";
-                    break;
-                case 3:
-                    patternName = "상";
-                    break;
-                case 4:
-                    patternName = "하";
-                    break;
-                default:
-                    patternName = "";
-                    break;
-            }
+            Instantiate(keyImg[game3_Manager.pattern[i] - 1]);
 
-            patternText.text += patternName;
+            //pattern.transform.localPosition =
         }
     }
 
