@@ -39,7 +39,7 @@ public class Game3_Manager : MonoBehaviour
                     FadeManager fadeMgr = fadeout.GetComponent<FadeManager>();
                     fadeMgr.isGameClear = true;
 
-                    Invoke("FadeOut", 1.5f);
+                    FadeOut();
                     isGameEnd = true;
                 }
             }
@@ -50,7 +50,7 @@ public class Game3_Manager : MonoBehaviour
                     PointManager.Instance.challengeNum++;
                     PointManager.Instance.cashPrize--;
 
-                    Invoke("FadeOut", 1.5f);
+                    FadeOut();
                     isGameEnd = true;
                 }
             }

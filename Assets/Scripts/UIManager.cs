@@ -41,15 +41,24 @@ public class UIManager : MonoBehaviour
         if(SceneManager.GetActiveScene().name == "Game_1")
         {
             //제한시간 UI
-            LimitTimeUI_1.text = "00 : " + gameManager.limitTime;
+            if(gameManager.limitTime > 9)
+                LimitTimeUI_1.text = "00 : " + gameManager.limitTime;
+            else
+                LimitTimeUI_1.text = "00 : 0" + gameManager.limitTime;
         }
         else if(SceneManager.GetActiveScene().name == "Game_2")
         {
             //제한시간 UI
-            LimitTimeUI_2.text = "00 : " + gameManager.limitTime;
+            if (gameManager.limitTime > 9)
+                LimitTimeUI_2.text = "00 : " + gameManager.limitTime;
+            else
+                LimitTimeUI_2.text = "00 : 0" + gameManager.limitTime;
 
             //달고나 포인트
-            TargetPointUI_2.text = "SCORE " + needleScipt.dalgonaPoint + " / " + needleScipt.targetPoint;
+            if(needleScipt.dalgonaPoint > 9)
+                TargetPointUI_2.text = "SCORE " + needleScipt.dalgonaPoint + " / " + needleScipt.targetPoint;
+            else
+                TargetPointUI_2.text = "SCORE 0" + needleScipt.dalgonaPoint + " / " + needleScipt.targetPoint;
         }
         else if(SceneManager.GetActiveScene().name == "Game_3")
         {
@@ -65,7 +74,10 @@ public class UIManager : MonoBehaviour
                 }
             }
 
-            pointUI.text = "SCORE " + game3_Manager.tugOfWarPoint + " / " + "10";
+            if(game3_Manager.tugOfWarPoint > 9)
+                pointUI.text = "SCORE " + game3_Manager.tugOfWarPoint + " / " + "10";
+            else
+                pointUI.text = "SCORE 0" + game3_Manager.tugOfWarPoint + " / " + "10";
 
             //패턴 UI
             if (game3_Manager.canTouch && !isShow)

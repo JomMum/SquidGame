@@ -5,6 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Game_1")]
+    public GameObject[] player_1;
+
+    [Header("Game_5")]
+    public GameObject[] player_5;
+
     public bool isGameStart = false;
 
     public int limitTime;
@@ -17,6 +23,7 @@ public class GameManager : MonoBehaviour
         {
             if(isGameStart && !isOnce)
             {
+                Instantiate(player_1[PointManager.Instance.playerNum - 1]);
                 limitTime = 40; //제한시간 40초
                 StartCoroutine("StartTimer");
                 isOnce = true;
@@ -35,6 +42,7 @@ public class GameManager : MonoBehaviour
         {
             if (isGameStart && !isOnce)
             {
+                Instantiate(player_5[PointManager.Instance.playerNum - 1]);
                 limitTime = 180; //제한시간 3분
                 StartCoroutine("StartTimer");
                 isOnce = true;

@@ -7,6 +7,22 @@ public class ButtonScript : MonoBehaviour
 {
     public GameManager gameManager;
 
+    [Header("SquidCard")]
+    public GameObject selectScreen;
+
+    [Header("SelectPlayer")]
+    public int playerNum;
+
+    public void ActiveSelectScreen()
+    {
+        selectScreen.SetActive(true);
+    }
+
+    public void SelectCharacter()
+    {
+        PointManager.Instance.playerNum = playerNum;
+    }
+
     public void GameStart()
     {
         gameObject.transform.parent.gameObject.SetActive(false);

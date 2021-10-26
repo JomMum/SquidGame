@@ -39,7 +39,7 @@ public class Player_Script : MonoBehaviour
                 FadeManager fadeMgr = fadeout.GetComponent<FadeManager>();
                 fadeMgr.isGameClear = true;
 
-                Invoke("FadeOut", 1.5f);
+                FadeOut();
 
                 isGameClear = false;
             }

@@ -6,6 +6,7 @@ public class PointManager : MonoBehaviour
 {
     private static PointManager instance = null;
 
+    public int playerNum;
     public int challengeNum;
     public int cashPrize = 456;
 
@@ -21,6 +22,12 @@ public class PointManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    void Start()
+    {
+        Screen.SetResolution(1920, 1080, true);
+    }
+
     public static PointManager Instance
     {
         get

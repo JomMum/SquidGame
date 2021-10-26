@@ -31,7 +31,7 @@ public class NeedleScript : MonoBehaviour
                 FadeManager fadeMgr = fadeout.GetComponent<FadeManager>();
                 fadeMgr.isGameClear = true;
 
-                Invoke("FadeOut", 1.5f);
+                FadeOut();
                 isGameClear = false;
             }
             else if (isGameOver)
@@ -40,7 +40,7 @@ public class NeedleScript : MonoBehaviour
                 PointManager.Instance.challengeNum++;
                 PointManager.Instance.cashPrize--;
 
-                Invoke("FadeOut", 1.5f);
+                FadeOut();
                 isGameOver = false;
             }
 

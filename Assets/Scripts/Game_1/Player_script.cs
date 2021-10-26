@@ -7,9 +7,9 @@ public class Player_script : MonoBehaviour
 {
     Animator anim;
 
-    public GameManager gameManager;
-    public Bot_Script Bot_Script;
-    public GameObject fadeout;
+    GameManager gameManager;
+    Bot_Script Bot_Script;
+    GameObject fadeout;
     public float movespeed;
 
     bool isGameOver;
@@ -20,6 +20,9 @@ public class Player_script : MonoBehaviour
 
     void Awake()
     {
+        gameManager = GameObject.Find("GameManager").gameObject.GetComponent<GameManager>();
+        Bot_Script = GameObject.Find("RedLightBot").gameObject.GetComponent<Bot_Script>();
+        fadeout = GameObject.Find("FadeWindow").transform.Find("Fadeout").gameObject;
         anim = GetComponent<Animator>();
     }
 
@@ -94,9 +97,7 @@ public class Player_script : MonoBehaviour
         if (gameManager.isGameStart)
         {
             if (collision.gameObject.CompareTag("FinalLine"))
-            {
                 isGameClear = true;
-            }
         }
     }
 
