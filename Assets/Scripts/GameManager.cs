@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] GameObject fadeOut;
     public bool isGameStart = false;
 
     public int limitTime;
@@ -31,12 +32,14 @@ public class GameManager : MonoBehaviour
                 isOnce = true;
             }
         }
-        else if(SceneManager.GetActiveScene().name == "Game_5")
+        else if(SceneManager.GetActiveScene().name == "Game_4")
         {
             if (isGameStart && !isOnce)
             {
                 limitTime = 180; //제한시간 3분
                 StartCoroutine("StartTimer");
+
+                GameObject.Find("GlassManager").GetComponent<GlassManager>().SetGlass();
                 isOnce = true;
             }
         }
@@ -48,5 +51,6 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1);
 
         timeOver = true;
+        fadeOut.SetActive(true);
     }
 }

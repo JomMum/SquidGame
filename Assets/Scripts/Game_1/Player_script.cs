@@ -23,6 +23,11 @@ public class Player_script : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
+    void Start()
+    {
+        anim.runtimeAnimatorController = ResultManager.Instance.playerAnim[ResultManager.Instance.characterIndex];
+    }
+
     void Update()
     {
         if(gameManager.isGameStart)
@@ -76,6 +81,9 @@ public class Player_script : MonoBehaviour
                     {
                         isGameOver = true;
                     }
+                }else
+                {
+                    anim.SetBool("isWalk", false);
                 }
             }
             else

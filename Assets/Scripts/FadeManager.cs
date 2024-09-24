@@ -13,10 +13,20 @@ public class FadeManager : MonoBehaviour
     {
         if (isGameClear)
         {
-            SceneManager.LoadScene("Game_" + nextSceneNum);
+            if (nextSceneNum == 5)
+            {
+                SceneManager.LoadScene("Result");
+            }
+            else
+            {
+                SceneManager.LoadScene("Game_" + nextSceneNum);
+            }
         }
         else
-            SceneManager.LoadScene("MainMenu");
+        {
+            ResultManager.Instance.tryCount++;
+            SceneManager.LoadScene("Game_" + (nextSceneNum - 1));
+        }
     }
 
     void ActiveFalseWindow()

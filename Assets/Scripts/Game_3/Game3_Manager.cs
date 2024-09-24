@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Game3_Manager : MonoBehaviour
 {
     public GameManager gameManager;
+    public UIManager uiManager;
     public GameObject fadeout;
 
     public int tugOfWarPoint = 5; //줄다리기 포인트
@@ -36,37 +37,44 @@ public class Game3_Manager : MonoBehaviour
                 FadeManager fadeMgr = fadeout.GetComponent<FadeManager>();
                 fadeMgr.isGameClear = true;
 
-                Invoke("FadeOut", 1.5f);
+                Invoke("FadeOut", 1f);
             }
             else if (tugOfWarPoint <= 0) //실패
             {
-                Invoke("FadeOut", 1.5f);
+                Invoke("FadeOut", 1f);
             }
-
-            if (canTouch)
+            else
             {
-                //실패/통과 유무 판정
-                if (pattern[curPattern] == 0)
+                if (canTouch)
                 {
-                    canTouch = false;
-                    isClear = true;
-                }
-                else if ((Input.GetKeyUp(KeyCode.LeftArrow) && pattern[curPattern] != 1)
-                         || (Input.GetKeyUp(KeyCode.RightArrow) && pattern[curPattern] != 2)
-                         || (Input.GetKeyUp(KeyCode.UpArrow) && pattern[curPattern] != 3)
-                         || (Input.GetKeyUp(KeyCode.DownArrow) && pattern[curPattern] != 4))
-                {
-                    canTouch = false;
-                    isClear = false;
-                }
+                    //실패/통과 유무 판정
+                    if (pattern[curPattern] == 0)
+                    {
+                        canTouch = false;
+                        isClear = true;
+                        tugOfWarPoint++;
+                        uiManager.activeResultUI = true;
+                    }
+                    else if ((Input.GetKeyUp(KeyCode.LeftArrow) && pattern[curPattern] != 1)
+                             || (Input.GetKeyUp(KeyCode.RightArrow) && pattern[curPattern] != 2)
+                             || (Input.GetKeyUp(KeyCode.UpArrow) && pattern[curPattern] != 3)
+                             || (Input.GetKeyUp(KeyCode.DownArrow) && pattern[curPattern] != 4))
+                    {
+                        canTouch = false;
+                        isClear = false;
+                        tugOfWarPoint--;
+                        uiManager.activeResultUI = true;
+                    }
 
-                //올바르게 키를 눌렀을 시
-                if ((Input.GetKeyUp(KeyCode.LeftArrow) && pattern[curPattern] == 1)
-                    || (Input.GetKeyUp(KeyCode.RightArrow) && pattern[curPattern] == 2)
-                    || (Input.GetKeyUp(KeyCode.UpArrow) && pattern[curPattern] == 3)
-                    || (Input.GetKeyUp(KeyCode.DownArrow) && pattern[curPattern] == 4))
-                {
-                    curPattern++;
+                    //올바르게 키를 눌렀을 시
+                    if ((Input.GetKeyUp(KeyCode.LeftArrow) && pattern[curPattern] == 1)
+                        || (Input.GetKeyUp(KeyCode.RightArrow) && pattern[curPattern] == 2)
+                        || (Input.GetKeyUp(KeyCode.UpArrow) && pattern[curPattern] == 3)
+                        || (Input.GetKeyUp(KeyCode.DownArrow) && pattern[curPattern] == 4))
+                    {
+                        curPattern++;
+                        uiManager.ChangePatternColor(curPattern);
+                    }
                 }
             }
         }
@@ -97,6 +105,8 @@ public class Game3_Manager : MonoBehaviour
             else
                 pattern[i] = 0;
         }
+
+        uiManager.ShowPatternUI();
     }
 
     IEnumerator StartLimitTime()
@@ -104,19 +114,15 @@ public class Game3_Manager : MonoBehaviour
         for(limitTime = maxLimitTime; limitTime > 0; limitTime--)
             yield return new WaitForSeconds(0.1f);
 
-        canTouch = false;
-
-        //성공 판정
-        if (isClear)
-        {
-            tugOfWarPoint++;
-        }
-        else
+        if (canTouch)
         {
             tugOfWarPoint--;
+            uiManager.activeResultUI = true;
         }
 
+        canTouch = false;
         isClear = false;
+
         WaveSetting();
     }
 

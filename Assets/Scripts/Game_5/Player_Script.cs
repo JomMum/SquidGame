@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Player_Script : MonoBehaviour
 {
-    public GameManager gameManager;
-    public GameObject fadeout;
+    public GameObject player;
+    GameManager gameManager;
+    GameObject fadeout;
 
     Animator anim;
 
@@ -16,8 +17,8 @@ public class Player_Script : MonoBehaviour
     bool isright;
     float curY;
 
-    bool isGameOver;
-    bool isGameClear;
+    bool isFall;
+    public bool isClear;
 
     bool isOnce;
     bool isOnceAnim;
@@ -25,22 +26,37 @@ public class Player_Script : MonoBehaviour
     void Awake()
     {
         anim = GetComponent<Animator>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        fadeout = GameObject.Find("FadeWindow").transform.Find("Fadeout").gameObject;
+    }
+
+    void Start()
+    {
+        anim.runtimeAnimatorController = ResultManager.Instance.playerAnim[ResultManager.Instance.characterIndex];
     }
 
     void Update()
     {
         if (gameManager.isGameStart)
         {
-            if (isGameClear)
+            if (isClear)
             {
                 //성공
-                isGameClear = false;
+                FadeManager fadeMgr = fadeout.GetComponent<FadeManager>();
+                fadeMgr.isGameClear = true;
+
+                Invoke("FadeOut", 0.5f);
             }
-            else if (isGameOver)
+            else if (isFall)
             {
-                //게임오버
-                Invoke("FadeOut", 1.5f);
-                isGameOver = false;
+                // 낙하
+                isFall = false;
+                ResultManager.Instance.tryCount++;
+
+                GameObject newPlayer = Instantiate(player);
+                newPlayer.transform.position = new Vector3(0, -10.5f, 0);
+
+                gameObject.GetComponent<Player_Script>().enabled = false;
             }
 
             if (!isOnce)
@@ -88,6 +104,11 @@ public class Player_Script : MonoBehaviour
         }
     }
 
+    void FadeOut()
+    {
+        fadeout.SetActive(true);
+    }
+
     void OnTriggerStay2D(Collider2D collision)
     {
         if(gameManager.isGameStart)
@@ -98,7 +119,7 @@ public class Player_Script : MonoBehaviour
 
                 if (collision.gameObject.CompareTag("FinalLine"))
                 {
-                    isGameClear = true;
+                    isClear = true;
                 }
                 else if (collision.gameObject.CompareTag("Glass"))
                 {
@@ -114,23 +135,22 @@ public class Player_Script : MonoBehaviour
 
                         if(!isOnceAnim)
                         {
-                            Animator glassAnim = collision.gameObject.GetComponent<Animator>();
-                            glassAnim.SetTrigger("doBroken");
+                            if (!glassScript.isBroken)
+                            {
+                                glassScript.isBroken = true;
+                                Animator glassAnim = collision.gameObject.GetComponent<Animator>();
+                                glassAnim.SetTrigger("doBroken");
+                            }
 
                             anim.SetTrigger("doFall");
 
                             isOnceAnim = true;
                         }
 
-                        isGameOver = true;
+                        isFall = true;
                     }
                 }
             }
         }
-    }
-
-    void FadeOut()
-    {
-        fadeout.SetActive(true);
     }
 }
